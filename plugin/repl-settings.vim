@@ -42,6 +42,12 @@ let s:repl = {
 		\ 'syntax': 'scheme',
 		\ 'title': 'Guile REPL',
 	\ },
+	\ 'lua': {
+		\ 'bin': 'lua',
+		\ 'args': [],
+		\ 'syntax': '',
+		\ 'title': 'Lua',
+	\ },
 	\ 'python': {
 		\ 'bin': 'python',
 		\ 'args': [],
