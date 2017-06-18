@@ -56,8 +56,8 @@ let s:repl = {
 	\ },
 	\ 'r7rs-small': {
 		\ 'bin': 'chibi-scheme',
-		\ 'args': ['-I', '.'],
-		\ 'syntax': '',
+		\ 'args': [],
+		\ 'syntax': 'scheme',
 		\ 'title': 'Chibi Scheme',
 	\ },
 	\ 'sh': {
