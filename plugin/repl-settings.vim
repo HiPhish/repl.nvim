@@ -60,6 +60,12 @@ let s:repl = {
 		\ 'syntax': 'scheme',
 		\ 'title': 'Chibi Scheme',
 	\ },
+	\ 'racket': {
+		\ 'bin': 'racket',
+		\ 'args': [],
+		\ 'syntax': 'racket',
+		\ 'title': 'Racket',
+	\ },
 	\ 'sh': {
 		\ 'bin': 'sh',
 		\ 'args': [],
