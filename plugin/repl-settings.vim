@@ -30,10 +30,11 @@ endif
 " ----------------------------------------------------------------------------
 " The default settings
 " ----------------------------------------------------------------------------
-" bin    : Which REPL binary to execute
-" args   : Arguments to pass to every execution, come before user arguments
-" syntax : Syntax highlighting to use for the REPL buffer
-" title  : Value of b:term_title
+" bin     : Which REPL binary to execute
+" args    : Arguments to pass to every execution, come before user arguments
+" syntax  : Syntax highlighting to use for the REPL buffer
+" title   : Value of b:term_title
+" preproc : Funcref to a text preprocessor before sending it to the REPL
 " ----------------------------------------------------------------------------
 let s:repl = {
 	\ 'guile': {
@@ -45,14 +46,13 @@ let s:repl = {
 	\ 'lua': {
 		\ 'bin': 'lua',
 		\ 'args': [],
-		\ 'syntax': '',
 		\ 'title': 'Lua',
 	\ },
 	\ 'python': {
 		\ 'bin': 'python',
 		\ 'args': [],
-		\ 'syntax': '',
 		\ 'title': 'Python REPL',
+		\ 'preproc': {txt -> join(filter(split(txt, '\n'), {idx, val -> !empty(val)}), "\n")}
 	\ },
 	\ 'r7rs-small': {
 		\ 'bin': 'chibi-scheme',
@@ -69,12 +69,14 @@ let s:repl = {
 	\ 'sh': {
 		\ 'bin': 'sh',
 		\ 'args': [],
-		\ 'syntax': '',
 		\ 'title': 'Bourne Shell',
 	\ },
 \ }
 
 " ----------------------------------------------------------------------------
+let s:repl['python3'] = copy(s:repl['python'])
+let s:repl['python3']['bin'] = 'python3'
+
 let s:repl['r7rs'] = copy(s:repl['r7rs-small'])
 let s:repl['scheme'] = copy(s:repl['r7rs-small'])
 " ----------------------------------------------------------------------------
