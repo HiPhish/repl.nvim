@@ -141,8 +141,9 @@ as a dictionary like this:
 >
     call repl#define_repl('python', {'syntax': ''}, 'force')
 <
-Here we turn off syntax highlighting for Python REPL buffers. We `'force'`
-this setting in order to override whatever the default setting might be.
+Here we explicitly turn off syntax highlighting for Python REPL buffers. We
+`'force'` this setting in order to override whatever the default setting might
+be. All settings except for `'bin'` are optional.
 
 It is also possible to specify local settings by using one of the scopes `t:`,
 `w:` or `b:` as the scope for the `repl` dictionary, with later scopes taking
@@ -158,30 +159,36 @@ g:repl['type']['bin']                                  *g:repl['type']['bin']*
 Which binary to execute for the REPL. The default uses the system binary.
 
 ------------------------------------------------------------------------------
-g:repl['type']['args']                                *g:repl['type']['args']*
+g:repl['type']['args'] = []                           *g:repl['type']['args']*
 
 Which arguments to pass to the executable, these arguments will be passed
 before the user-supplied arguments.
 
 ------------------------------------------------------------------------------
-g:repl['type']['syntax']                            *g:repl['type']['syntax']*
+g:repl['type']['syntax'] = ''                       *g:repl['type']['syntax']*
 
 Which syntax highlighting to use for the REPL. Use the empty string if you
 wish to disable syntax highlighting.
 
 ------------------------------------------------------------------------------
-g:repl['type']['title']                              *g:repl['type']['title']*
+g:repl['type']['title'] = b:term_title               *g:repl['type']['title']*
 
 The value used for the terminal buffer's `b:term_title` variable.
 
 ------------------------------------------------------------------------------
-g:repl['type']['spawn']                              *g:repl['type']['spawn']*
+g:repl['type']['preproc'] = {txt -> txt}           *g:repl['type']['preproc']*
 
-Optional, defaults to |repl#spawn()|; this function opens a new buffer and
-sets up the REPL process. See |repl#spawn()| for details.
+When sending text to the REPL it is preprocessed by this function first. The
+default is to pass the text unmodified. A preprocessor could for example
+remove blank lines if they are known to cause problems with the REPL.
 
-This option is intended for REPLs which do something special, like not using
-the terminal. For most REPLs the default is exactly what you want to use.
+------------------------------------------------------------------------------
+g:repl['type']['spawn'] = repl#spawn()               *g:repl['type']['spawn']*
+
+This function opens a new buffer and sets up the REPL process. For details see
+|repl#spawn()|. This option is intended for REPLs which do something special,
+like not using the terminal. For most REPLs the default is exactly what you
+want to use.
 
 
 

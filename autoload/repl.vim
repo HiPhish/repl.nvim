@@ -100,15 +100,27 @@ endf
 function! repl#spawn(mods, repl, type)
 	" Open a new buffer and launch the terminal
 	silent execute a:mods 'new'
-	silent execute 'terminal' a:repl.bin join(a:repl.args, ' ')
-	silent execute 'set syntax='.a:repl.syntax
-	silent let b:term_title = a:repl.title
+
+	let l:args = has_key(a:repl, 'args') ? a:repl.args : []
+	silent execute 'terminal' a:repl.bin join(l:args, ' ')
+
+	if has_key(a:repl, 'syntax')
+		let l:Syntax = a:repl.syntax
+		if type(l:Syntax) == type(function('type'))
+			let l:Syntax = l:Syntax()
+		endif
+		silent execute 'set syntax='.l:Syntax
+	endif
+
+	if has_key(a:repl, 'title')
+		silent let b:term_title = a:repl.title
+	endif
 
 	let b:repl = {
 		\ '-': {
 			\ 'type'   : a:type,
 			\ 'bin'    : a:repl.bin,
-			\ 'args'   : a:repl.args,
+			\ 'args'   : l:args,
 			\ 'job_id' : b:terminal_job_id,
 			\ 'buffer' : nvim_get_current_buf()
 		\ }
