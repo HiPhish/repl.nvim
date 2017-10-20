@@ -58,9 +58,8 @@ function! s:send_to_repl(type, ...) range
 		Repl
 	endif
 
-	if has_key(g:repl[&ft], 'preproc')
-		let l:text = g:repl[&ft]['preproc'](l:text)
-	endif
+	" Apply the preprocessor function, or identity if there is none
+	let l:text = get(g:repl[&ft], 'preproc', {t -> t})(l:text)
 
 	call jobsend(g:repl[&ft].instances[0].job_id, l:text)
 	Repl

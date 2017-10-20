@@ -73,11 +73,7 @@ endfunction
 "  settings are merged with the new one according to 'a:force'.
 " ----------------------------------------------------------------------------
 function! repl#define_repl(type, repl, force)
-	if !has_key(g:repl, a:type)
-		let g:repl[a:type] = a:repl
-		return
-	endif
-
+	let g:repl[a:type] = get(g:repl, a:type, a:repl)
 	call extend(g:repl[a:type], a:repl, a:force)
 endf
 
@@ -101,20 +97,16 @@ function! repl#spawn(mods, repl, type)
 	" Open a new buffer and launch the terminal
 	silent execute a:mods 'new'
 
-	let l:args = has_key(a:repl, 'args') ? a:repl.args : []
+	let l:args = get(a:repl, 'args', [])
 	silent execute 'terminal' a:repl.bin join(l:args, ' ')
 
-	if has_key(a:repl, 'syntax')
-		let l:Syntax = a:repl.syntax
-		if type(l:Syntax) == type(function('type'))
-			let l:Syntax = l:Syntax()
-		endif
-		silent execute 'set syntax='.l:Syntax
+	let l:Syntax = get(a:repl, 'syntax', '')
+	if type(l:Syntax) == type(function('type'))
+		let l:Syntax = l:Syntax()
 	endif
+	silent execute 'set syntax='.l:Syntax
 
-	if has_key(a:repl, 'title')
-		silent let b:term_title = a:repl.title
-	endif
+	silent let b:term_title = get(a:repl, 'title', b:term_title)
 
 	let b:repl = {
 		\ '-': {

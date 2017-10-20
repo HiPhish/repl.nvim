@@ -245,7 +245,7 @@ BOURNE SHELL                                                    *repl.nvim-sh*
         'title': 'Bourne Shell',
     }
 <
-The Bourne Shell defaults to your system `sh` binary. Beware that this  might
+The Bourne Shell defaults to your system `sh` binary. Beware that this might
 actually be the Bourne Again Shell (`bash`) under the hood.
 
 ------------------------------------------------------------------------------
